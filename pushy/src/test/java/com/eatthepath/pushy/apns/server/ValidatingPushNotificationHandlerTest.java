@@ -143,7 +143,6 @@ public abstract class ValidatingPushNotificationHandlerTest {
 
     @Test
     void testHandleNotificationWithSpecifiedPriority() throws Exception {
-                 try {
         this.headers.setInt(APNS_PRIORITY_HEADER, DeliveryPriority.CONSERVE_POWER.getCode());
 
         this.getHandler(DEVICE_TOKENS_BY_TOPIC, Collections.emptyMap())
@@ -153,15 +152,6 @@ public abstract class ValidatingPushNotificationHandlerTest {
 
         this.getHandler(DEVICE_TOKENS_BY_TOPIC, Collections.emptyMap())
                 .handlePushNotification(this.headers, this.payload);
-
-        } catch (Exception e) {
-            this.assertNotificationRejected(
-                    "Push notifications for topics not associated with a valid verification key should be rejected.",
-                    this.getHandler(DEVICE_TOKENS_BY_TOPIC, Collections.emptyMap()),
-                    this.headers,
-                    this.payload,
-                    RejectionReason.INVALID_PROVIDER_TOKEN);
-        }
     }
 
     @Test
